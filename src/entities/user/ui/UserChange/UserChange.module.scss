@@ -1,0 +1,49 @@
+.wrapper {
+    border-radius: 10px;
+    padding: 20px;
+    background-color: var(--bg);
+    flex: 1 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    & .error {
+        position: relative;
+        &Input {
+            border-color: var(--danger);
+        }
+        & .inputWrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        &Text {
+            position: absolute;
+            bottom: -18px;
+            left: 4px;
+        }
+    }
+
+    & .main {
+        display: flex;
+        align-items: center;
+        gap: 40px;
+
+        &Info {
+            flex: 1 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+    }
+    & .additional {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        & .info {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+    }
+}

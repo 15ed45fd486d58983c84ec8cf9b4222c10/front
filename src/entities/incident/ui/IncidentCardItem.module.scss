@@ -1,0 +1,11 @@
+.wrapper {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: var(--bg);
+    & .img {
+        width: 240px;
+        height: 160px;
+    }
+}

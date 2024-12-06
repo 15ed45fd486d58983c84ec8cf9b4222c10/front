@@ -1,0 +1,28 @@
+.wrapper {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    & .list {
+        padding: 16px;
+        border-radius: 10px;
+        background-color: var(--bg);
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        &Item {
+            & a {
+                background-color: var(--bg);
+                display: block;
+                padding: 10px 20px;
+                border-radius: 5px;
+                &:hover {
+                    filter: brightness(85%);
+                }
+            }
+            &.active a {
+                filter: brightness(75%);
+            }
+        }
+    }
+}

@@ -1,0 +1,29 @@
+.wrapper {
+    padding: 20px;
+    background-color: var(--bg);
+    border-radius: 10px;
+    flex: 0 1 300px;
+    & .list {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+
+        &Item {
+            &.active a {
+                filter: brightness(80%);
+            }
+        }
+        &Item a,
+        &Item p {
+            display: block;
+            border-radius: 10px;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: 0.3s all ease;
+            background-color: var(--bg);
+            &:hover {
+                filter: brightness(90%);
+            }
+        }
+    }
+}

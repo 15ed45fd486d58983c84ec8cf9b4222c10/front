@@ -1,0 +1,26 @@
+.navbar {
+    background-color: var(--bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-height: var(--navbar-size);
+    height: var(--navbar-size);
+    & .container {
+        padding: 10px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        & .list {
+            display: flex;
+            gap: 10px;
+        }
+        & .additional {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            & .avatar {
+                cursor: pointer;
+            }
+        }
+    }
+}

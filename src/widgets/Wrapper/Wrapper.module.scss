@@ -1,0 +1,17 @@
+.main {
+    display: flex;
+    flex-direction: column;
+
+    & .body {
+        padding-top: 20px;
+        background-color: var(--bg-dark);
+        min-height: calc(100vh - var(--navbar-size));
+    }
+    & .container {
+        position: relative;
+
+        & .mainInfo {
+            padding-left: calc(var(--toolbar-size) + 20px);
+        }
+    }
+}
