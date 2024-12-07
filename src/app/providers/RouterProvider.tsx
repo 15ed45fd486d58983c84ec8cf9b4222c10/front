@@ -2,6 +2,7 @@ import { Wrapper } from '@widgets/Wrapper';
 import { createBrowserRouter, redirect } from 'react-router-dom';
 import { IncidentPage, LoginPage, MainPage, RegisterPage, UserPage } from '@pages/ui';
 import { PrivateRoute } from './PrivateRoute';
+import { PredictionsPage } from '@/pages/ui/PredictionsPage/PredictionsPage';
 
 export const router = createBrowserRouter([
     {
@@ -23,6 +24,10 @@ export const router = createBrowserRouter([
             {
                 path: '/incidents',
                 element: <IncidentPage />,
+            },
+            {
+                path: '/predictions',
+                element: <PredictionsPage />,
             },
         ],
     },

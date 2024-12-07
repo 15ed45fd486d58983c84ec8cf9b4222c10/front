@@ -26,7 +26,7 @@ export const Navbar = () => {
                         </Link>
                     ) : (
                         <Link size="h4" to="/auth/login">
-                            <Button borderColor="secondary" color="secondary" borderRadius={5} size="small">
+                            <Button borderColor="primary" color="primary" borderRadius={5} size="small">
                                 <Paragraph size="h5" color="white">
                                     Авторизация
                                 </Paragraph>

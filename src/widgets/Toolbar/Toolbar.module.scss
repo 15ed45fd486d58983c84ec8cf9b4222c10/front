@@ -1,10 +1,12 @@
 .wrapper {
     position: absolute;
     top: 0;
+    height: calc(100vh - var(--navbar-size));
     bottom: 0;
     left: 0;
+    max-width: var(--toolbar-size);
     & .list {
-        padding: 16px;
+        padding: 20px;
         border-radius: 10px;
         background-color: var(--bg);
         display: flex;
@@ -15,13 +17,13 @@
                 background-color: var(--bg);
                 display: block;
                 padding: 10px 20px;
-                border-radius: 5px;
+                border-radius: 10px;
                 &:hover {
-                    filter: brightness(85%);
+                    filter: brightness(95%);
                 }
             }
             &.active a {
-                filter: brightness(75%);
+                background-color: var(--primary);
             }
         }
     }

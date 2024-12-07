@@ -1,6 +1,10 @@
 import { IIncidentCardItemProps, IncidentCardItem, IncidentTypeEnum } from '@/entities/incident';
 import cls from './IncidentPage.module.scss';
+import { SelectOne } from 'daskis-ui-kit';
+import { SelectMany, Option } from 'daskis-ui-kit';
+import { useState } from 'react';
 
+// Моковые данные инцидентов
 export const mockIncidents: IIncidentCardItemProps[] = [
     {
         type: IncidentTypeEnum.Accident,
@@ -15,8 +19,6 @@ export const mockIncidents: IIncidentCardItemProps[] = [
         severity: 7,
         timestamp: '2024-12-06T08:30:00Z',
         status: 'active',
-        imageUrl:
-            'https://plus.unsplash.com/premium_photo-1664547606209-fb31ec979c85?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
         onClick: (id) => console.log(`Clicked on incident ${id}`),
         onResolve: (id) => console.log(`Resolved incident ${id}`),
     },
@@ -33,8 +35,6 @@ export const mockIncidents: IIncidentCardItemProps[] = [
         severity: 9,
         timestamp: '2024-12-06T09:15:00Z',
         status: 'active',
-        imageUrl:
-            'https://plus.unsplash.com/premium_photo-1664547606209-fb31ec979c85?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
         onClick: (id) => console.log(`Clicked on incident ${id}`),
         onResolve: (id) => console.log(`Resolved incident ${id}`),
     },
@@ -51,8 +51,6 @@ export const mockIncidents: IIncidentCardItemProps[] = [
         severity: 5,
         timestamp: '2024-12-06T10:00:00Z',
         status: 'pending',
-        imageUrl:
-            'https://plus.unsplash.com/premium_photo-1664547606209-fb31ec979c85?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
         onClick: (id) => console.log(`Clicked on incident ${id}`),
         onResolve: (id) => console.log(`Resolved incident ${id}`),
     },
@@ -74,11 +72,97 @@ export const mockIncidents: IIncidentCardItemProps[] = [
     },
 ];
 
+// Мапа для перевода типа инцидента
+const incidentTypeTranslations = new Map<IncidentTypeEnum, string>([
+    [IncidentTypeEnum.Accident, 'ДТП'],
+    [IncidentTypeEnum.RoadRepair, 'Ремонт дороги'],
+    [IncidentTypeEnum.MassEvent, 'Массовое мероприятие'],
+    [IncidentTypeEnum.VehicleAnomaly, 'Аномальное поведение транспорта'],
+    [IncidentTypeEnum.CitizenRequest, 'Обращение граждан'],
+    [IncidentTypeEnum.SignalFailure, 'Сбой в работе светофора'],
+    [IncidentTypeEnum.Other, 'Прочее'],
+]);
+
 export const IncidentPage = () => {
+    const [selectedDate, setSelectedDate] = useState<Option | null>(null);
+    const [selectedTypes, setSelectedTypes] = useState<Option[]>([]);
+    const [isDateOpen, setIsDateOpen] = useState(false);
+    const [isTypeOpen, setIsTypeOpen] = useState(false);
+    const [sortOrder, setSortOrder] = useState<'asc' | 'desc' | string>('desc'); // Состояние для управления сортировкой
+
+    // Опции для SelectOne (дат)
+    const dateOptions: Option[] = [
+        {
+            label: 'По возрастанию',
+            value: 'asc',
+        },
+        {
+            label: 'По убыванию',
+            value: 'desc',
+        },
+    ];
+
+    // Фильтруем инциденты по выбранным типам и дате
+    const filteredIncidents = mockIncidents
+        .filter((incident) => {
+            const isTypeMatch =
+                selectedTypes.length === 0 || selectedTypes.some((type) => type.value === incident.type);
+            return isTypeMatch;
+        })
+        .sort((a, b) => {
+            const dateA = new Date(a.timestamp);
+            const dateB = new Date(b.timestamp);
+
+            // Сортировка по дате
+            if (sortOrder === 'asc') {
+                return dateA.getTime() - dateB.getTime();
+            } else {
+                return dateB.getTime() - dateA.getTime();
+            }
+        });
+
+    // Опции для SelectMany (типы инцидентов)
+    const incidentTypeOptions = Object.values(IncidentTypeEnum).map((type) => ({
+        label: incidentTypeTranslations.get(type) || type,
+        value: type,
+    }));
+
+    const handleSelectDateChange = (selected: Option | null) => {
+        if (selected) {
+            setSelectedDate(selected);
+            setSortOrder(selected.value); // Устанавливаем порядок сортировки
+            setIsDateOpen(false); // Закрыть SelectOne после выбора
+        }
+    };
+
+    const handleSelectTypesChange = (selected: Option[]) => {
+        setSelectedTypes(selected);
+        setIsTypeOpen(false); // Закрыть SelectMany при изменении
+    };
+
     return (
         <div className={cls.wrapper}>
+            <div className={cls.selectWrapper}>
+                <SelectOne
+                    size="small"
+                    selected={selectedDate}
+                    options={dateOptions}
+                    placeholder="Выберите дату"
+                    onChange={handleSelectDateChange}
+                    onClose={() => setIsDateOpen(false)}
+                />
+                <SelectMany
+                    size="small"
+                    selected={selectedTypes}
+                    options={incidentTypeOptions}
+                    placeholder="Выберите типы инцидентов"
+                    onChange={handleSelectTypesChange}
+                    onClose={() => setIsTypeOpen(false)}
+                />
+            </div>
+
             <ul className={cls.list}>
-                {mockIncidents.map((item) => (
+                {filteredIncidents.map((item) => (
                     <IncidentCardItem key={item.id} {...item} />
                 ))}
             </ul>

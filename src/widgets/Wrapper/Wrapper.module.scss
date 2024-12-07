@@ -5,13 +5,14 @@
     & .body {
         padding-top: 20px;
         background-color: var(--bg-dark);
-        min-height: calc(100vh - var(--navbar-size));
+        min-height: calc(100vh - var(--navbar-size) + 20px);
     }
     & .container {
         position: relative;
 
         & .mainInfo {
             padding-left: calc(var(--toolbar-size) + 20px);
+            padding-bottom: 20px;
         }
     }
 }

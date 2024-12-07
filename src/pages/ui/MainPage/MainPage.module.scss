@@ -1,0 +1,93 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    & .map {
+        display: flex;
+        gap: 20px;
+        align-items: start;
+    }
+    & .navigation {
+        border-radius: 10px;
+        padding: 20px;
+        background-color: var(--bg);
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+        & .title {
+            text-align: center;
+            font-weight: 600;
+        }
+        & .list {
+            display: flex;
+            flex-direction: column;
+            max-width: 200px;
+            gap: 10px;
+            &Item {
+                border-radius: 6px;
+                padding: 6px 10px;
+                transition: 0.3s all ease;
+                display: flex;
+                gap: 10px;
+                align-items: center;
+                cursor: pointer;
+                & p {
+                    transition: 0.3s all ease;
+                }
+
+                & svg {
+                    min-width: 28px;
+                    max-width: 28px;
+                    min-height: 28px;
+                    max-height: 28px;
+                    & path {
+                        transition: 0.3s all ease;
+                        fill: var(--text);
+                    }
+                }
+
+                &:hover {
+                    background-color: color-mix(in srgb, var(--primary) 10%, var(--primary) 10%);
+                    & p {
+                        color: var(--primary);
+                    }
+                    & svg {
+                        & path {
+                            fill: var(--primary);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    & .incidents {
+        border-radius: 10px;
+        padding: 20px;
+        background-color: var(--bg);
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+        & .heading {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            & .title {
+                font-weight: 600;
+            }
+            & svg {
+                width: 20px;
+                height: 20px;
+                & path {
+                    fill: var(--text);
+                }
+            }
+        }
+        & .list {
+            & > li:not(:last-child) {
+                border-bottom-left-radius: 0px;
+                border-bottom-right-radius: 0px;
+                border-bottom: 1px solid #aaa;
+            }
+        }
+    }
+}

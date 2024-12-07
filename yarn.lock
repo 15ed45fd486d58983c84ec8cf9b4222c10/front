@@ -1266,6 +1266,11 @@ daskis-ui-kit@^0.0.53:
   resolved "https://registry.yarnpkg.com/daskis-ui-kit/-/daskis-ui-kit-0.0.53.tgz#bb7567c89c755b715bd2b52e1a950c70bd548ca7"
   integrity sha512-Wasr0XShfTU2XhYq+R38z6FUmDeqb4d7cDZynpfIqrXVgGlNvGyGM9u2n2W0tVo5w34HN8vAW/3vxNXhySeGmg==
 
+dayjs@^1.11.13:
+  version "1.11.13"
+  resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.11.13.tgz#92430b0139055c3ebb60150aa13e860a4b5a366c"
+  integrity sha512-oaMBel6gjolK862uaPQOVTA7q3TZhuSvuMQAAglQDOWYO9A91IrAOUJEyKVlqJlHE0vq5p5UXxzdPfMH/x6xNg==
+
 debug@^4.0.0, debug@^4.1.0, debug@^4.3.1, debug@^4.3.2, debug@^4.3.4:
   version "4.3.4"
   resolved "https://registry.npmjs.org/debug/-/debug-4.3.4.tgz"

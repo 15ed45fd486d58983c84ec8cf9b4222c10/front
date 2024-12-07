@@ -19,7 +19,7 @@ const Toolbar = () => {
                         )}
                         key={item.path}
                     >
-                        <Link color="text" to={item.path}>
+                        <Link color={pathname.includes(item.path) ? 'white' : 'text'} to={item.path}>
                             {item.label}
                         </Link>
                     </li>
