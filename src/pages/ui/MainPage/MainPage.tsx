@@ -1,7 +1,7 @@
 import { YMaps, Map, TrafficControl } from '@pbe/react-yandex-maps';
 import { useState, useEffect } from 'react';
 import cls from './MainPage.module.scss';
-import { Paragraph } from 'daskis-ui-kit';
+import { Heading, Paragraph } from 'daskis-ui-kit';
 import { mapNavigation } from '@/shared/config';
 import Settings from '@assets/icons/settings.svg';
 import { IIncidentCardItemProps, IncidentCardItem, IncidentTypeEnum } from '@/entities/incident';
@@ -98,6 +98,9 @@ export const MainPage = () => {
 
     return (
         <div className={cls.wrapper}>
+            <Heading style={{ fontWeight: 500 }} weight="fontBold">
+                Главная
+            </Heading>
             <div className={cls.map}>
                 <YMaps>
                     <Map

@@ -1,6 +1,6 @@
 import { IIncidentCardItemProps, IncidentCardItem, IncidentTypeEnum } from '@/entities/incident';
 import cls from './IncidentPage.module.scss';
-import { SelectOne } from 'daskis-ui-kit';
+import { Heading, SelectOne } from 'daskis-ui-kit';
 import { SelectMany, Option } from 'daskis-ui-kit';
 import { useState } from 'react';
 
@@ -142,6 +142,9 @@ export const IncidentPage = () => {
 
     return (
         <div className={cls.wrapper}>
+            <Heading style={{ fontWeight: 500 }} weight="fontBold">
+                Инциденты
+            </Heading>
             <div className={cls.selectWrapper}>
                 <SelectOne
                     size="small"
