@@ -5,7 +5,7 @@ import { SelectMany, Option } from 'daskis-ui-kit';
 import { useState } from 'react';
 
 // Моковые данные инцидентов
-export const mockIncidents: IIncidentCardItemProps[] = [
+const mockIncidents: IIncidentCardItemProps[] = [
     {
         type: IncidentTypeEnum.Accident,
         id: '1',
