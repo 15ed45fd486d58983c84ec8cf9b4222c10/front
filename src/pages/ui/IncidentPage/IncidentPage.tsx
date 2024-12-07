@@ -86,8 +86,8 @@ const incidentTypeTranslations = new Map<IncidentTypeEnum, string>([
 export const IncidentPage = () => {
     const [selectedDate, setSelectedDate] = useState<Option | null>(null);
     const [selectedTypes, setSelectedTypes] = useState<Option[]>([]);
-    const [isDateOpen, setIsDateOpen] = useState(false);
-    const [isTypeOpen, setIsTypeOpen] = useState(false);
+    const [, setIsDateOpen] = useState(false);
+    const [, setIsTypeOpen] = useState(false);
     const [sortOrder, setSortOrder] = useState<'asc' | 'desc' | string>('desc'); // Состояние для управления сортировкой
 
     // Опции для SelectOne (дат)
