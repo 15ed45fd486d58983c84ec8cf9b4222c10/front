@@ -5,6 +5,12 @@
     justify-content: center;
     max-height: var(--navbar-size);
     height: var(--navbar-size);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10000000;
+
     & .container {
         padding: 10px 20px;
         display: flex;
@@ -18,6 +24,31 @@
             display: flex;
             align-items: center;
             gap: 20px;
+            & .chat {
+                display: flex;
+                align-items: center;
+                margin: -10px;
+                padding: 10px;
+                border-radius: 10px;
+                background-color: var(--bg);
+                gap: 10px;
+                transition: 0.3s all ease;
+                cursor: pointer;
+                & .title {
+                    font-weight: 500 !important;
+                }
+                & svg {
+                    width: 20px;
+                    height: 20px;
+                    & path {
+                        fill: var(--primary);
+                    }
+                }
+
+                &:hover {
+                    filter: brightness(90%);
+                }
+            }
             & .avatar {
                 cursor: pointer;
             }

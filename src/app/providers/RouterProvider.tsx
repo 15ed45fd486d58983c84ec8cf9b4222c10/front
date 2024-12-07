@@ -1,6 +1,15 @@
 import { Wrapper } from '@widgets/Wrapper';
 import { createBrowserRouter, redirect } from 'react-router-dom';
-import { IncidentPage, LoginPage, MainPage, RegisterPage, UserPage } from '@pages/ui';
+import {
+    AnalyticsPage,
+    HeatmapPage,
+    IncidentPage,
+    LoginPage,
+    MainPage,
+    RegisterPage,
+    SimulationPage,
+    UserPage,
+} from '@pages/ui';
 import { PrivateRoute } from './PrivateRoute';
 import { PredictionsPage } from '@/pages/ui/PredictionsPage/PredictionsPage';
 
@@ -28,6 +37,14 @@ export const router = createBrowserRouter([
             {
                 path: '/predictions',
                 element: <PredictionsPage />,
+            },
+            {
+                path: '/analytics',
+                element: <AnalyticsPage />,
+            },
+            {
+                path: '/simulation',
+                element: <SimulationPage />,
             },
         ],
     },

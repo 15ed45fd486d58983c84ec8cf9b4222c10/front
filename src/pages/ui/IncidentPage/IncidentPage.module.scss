@@ -2,6 +2,49 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
+    & .infoWrapper {
+        display: flex;
+        gap: 20px;
+        & .cameras {
+            padding: 20px;
+            border-radius: 10px;
+            background-color: var(--bg);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            & .list {
+                display: grid;
+                gap: 20px;
+                grid-template-columns: repeat(2, 1fr);
+                & img {
+                    border-radius: 10px;
+                }
+            }
+        }
+    }
+    & .title {
+        font-weight: 600 !important;
+    }
+    & .some {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        flex: 1 1 40%;
+    }
+    & .container {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        padding: 20px;
+        border-radius: 10px;
+        background-color: var(--bg);
+    }
+    & .body {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        flex: 1 1 60%;
+    }
     & .selectWrapper {
         display: flex;
         align-items: center;

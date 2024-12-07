@@ -1,0 +1,10 @@
+.wrapper {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 40px;
+    & .title {
+        font-weight: 500 !important;
+    }
+}

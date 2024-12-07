@@ -1,0 +1,45 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    & .bold {
+        font-weight: 700 !important;
+    }
+    & .title {
+        font-weight: 500 !important;
+    }
+    & .body {
+        padding: 20px;
+        background-color: var(--bg);
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+    & .tab {
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+    }
+
+    & .list {
+        display: flex;
+        gap: 30px;
+        &Item {
+            cursor: pointer;
+            padding: 10px 0;
+            &.active {
+                border-bottom: 5px solid var(--primary);
+            }
+        }
+    }
+    & .grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+    }
+    & .buttons {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+}

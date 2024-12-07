@@ -13,8 +13,8 @@ dayjs.extend(localizedFormat);
 
 // Подключаем локализацию для России
 import 'dayjs/locale/ru';
-import { IncidentTypeEnum } from '../types';
 import { classNames } from '@/shared/lib';
+import { IncidentTypeEnum } from '../../types';
 dayjs.locale('ru');
 
 const statusTranslations = new Map([

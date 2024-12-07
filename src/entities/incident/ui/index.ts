@@ -1,2 +1,3 @@
 export * from './IncidentCardItem';
-export * from './IncidentCardItem.props';
+export * from './IncidentWeather';
+export * from './IncidentItem';

@@ -4,7 +4,9 @@ import cls from './MainPage.module.scss';
 import { Heading, Paragraph } from 'daskis-ui-kit';
 import { mapNavigation } from '@/shared/config';
 import Settings from '@assets/icons/settings.svg';
-import { IIncidentCardItemProps, IncidentCardItem, IncidentTypeEnum } from '@/entities/incident';
+import { IncidentTypeEnum } from '@/entities/incident';
+import { IIncidentCardItemProps } from '@/entities/incident/ui';
+import { IncidentCardItem } from '@/entities/incident/ui/IncidentCardItem/IncidentCardItem';
 
 const mockIncidents: IIncidentCardItemProps[] = [
     {

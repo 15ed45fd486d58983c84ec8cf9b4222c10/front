@@ -1,8 +1,10 @@
-import { IIncidentCardItemProps, IncidentCardItem, IncidentTypeEnum } from '@/entities/incident';
+import { IIncidentCardItemProps, IncidentItem, IncidentWeather } from '@/entities/incident/ui';
 import cls from './IncidentPage.module.scss';
-import { Heading, SelectOne } from 'daskis-ui-kit';
+import { Heading, Paragraph, SelectOne } from 'daskis-ui-kit';
 import { SelectMany, Option } from 'daskis-ui-kit';
 import { useState } from 'react';
+import { IncidentTypeEnum, useIncident } from '@/entities/incident';
+import { IncidentCardItem } from '@/entities/incident/ui/IncidentCardItem/IncidentCardItem';
 
 // Моковые данные инцидентов
 const mockIncidents: IIncidentCardItemProps[] = [
@@ -89,6 +91,7 @@ export const IncidentPage = () => {
     const [, setIsDateOpen] = useState(false);
     const [, setIsTypeOpen] = useState(false);
     const [sortOrder, setSortOrder] = useState<'asc' | 'desc' | string>('desc'); // Состояние для управления сортировкой
+    const { isActive } = useIncident();
 
     // Опции для SelectOne (дат)
     const dateOptions: Option[] = [
@@ -145,30 +148,66 @@ export const IncidentPage = () => {
             <Heading style={{ fontWeight: 500 }} weight="fontBold">
                 Инциденты
             </Heading>
-            <div className={cls.selectWrapper}>
-                <SelectOne
-                    size="small"
-                    selected={selectedDate}
-                    options={dateOptions}
-                    placeholder="Выберите дату"
-                    onChange={handleSelectDateChange}
-                    onClose={() => setIsDateOpen(false)}
-                />
-                <SelectMany
-                    size="small"
-                    selected={selectedTypes}
-                    options={incidentTypeOptions}
-                    placeholder="Выберите типы инцидентов"
-                    onChange={handleSelectTypesChange}
-                    onClose={() => setIsTypeOpen(false)}
-                />
-            </div>
+            <div className={cls.infoWrapper}>
+                <div className={cls.body}>
+                    <div className={cls.selectWrapper}>
+                        <SelectOne
+                            size="small"
+                            selected={selectedDate}
+                            options={dateOptions}
+                            placeholder="Дата"
+                            onChange={handleSelectDateChange}
+                            onClose={() => setIsDateOpen(false)}
+                        />
+                        <SelectMany
+                            size="small"
+                            selected={selectedTypes}
+                            options={incidentTypeOptions}
+                            placeholder="Тип инцидентов"
+                            onChange={handleSelectTypesChange}
+                            onClose={() => setIsTypeOpen(false)}
+                        />
+                    </div>
+                    <div className={cls.container}>
+                        <Heading size="h6" className={cls.title}>
+                            Список инцидентов
+                        </Heading>
+                        <ul className={cls.list}>
+                            {filteredIncidents.map((item, index) => (
+                                <IncidentItem key={item.id} {...item} />
+                            ))}
+                        </ul>
+                    </div>
+                </div>
 
-            <ul className={cls.list}>
-                {filteredIncidents.map((item) => (
-                    <IncidentCardItem key={item.id} {...item} />
-                ))}
-            </ul>
+                {isActive && (
+                    <div className={cls.some}>
+                        <div className={cls.cameras}>
+                            <Paragraph size="h1">Видео с ближайших камер наблюдения</Paragraph>
+                            <ul className={cls.list}>
+                                <li className={cls.lisItem}>
+                                    <img src="/cameras1.png" alt="" />
+                                </li>
+                                <li className={cls.lisItem}>
+                                    <img src="/cameras1.png" alt="" />
+                                </li>
+                                <li className={cls.lisItem}>
+                                    <img src="/cameras1.png" alt="" />
+                                </li>
+                                <li className={cls.lisItem}>
+                                    <img src="/cameras1.png" alt="" />
+                                </li>
+                            </ul>
+                        </div>
+                        <div className={cls.cameras}>
+                            <Paragraph className={cls.title} size="h1">
+                                Анализ и прогнозирование
+                            </Paragraph>
+                            <IncidentWeather />
+                        </div>
+                    </div>
+                )}
+            </div>
         </div>
     );
 };

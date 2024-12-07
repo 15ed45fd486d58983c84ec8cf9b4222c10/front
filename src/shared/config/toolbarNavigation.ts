@@ -12,23 +12,12 @@ export const toolbarNavigation: { path: string; label: string }[] = [
         label: 'Прогнозы',
     },
     {
-        path: '/video-surveillance',
-        label: 'Видеонаблюдение',
+        path: '/analytics',
+        label: 'Аналитика',
     },
-    {
-        path: '/historical-data',
-        label: 'Исторические данные',
-    },
+
     {
         path: '/simulation',
         label: 'Симуляция',
-    },
-    {
-        path: '/settings',
-        label: 'Настройки',
-    },
-    {
-        path: '/notifications-and-requests',
-        label: 'Оповещения и обращения',
     },
 ];

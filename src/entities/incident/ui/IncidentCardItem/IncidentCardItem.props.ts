@@ -1,4 +1,4 @@
-import { IncidentTypeEnum } from '../types';
+import { IncidentTypeEnum } from '../../types';
 
 export interface IIncidentCardItemProps {
     type: IncidentTypeEnum; // Тип инцидента

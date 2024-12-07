@@ -1,0 +1,106 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: var(--bg);
+    &.active {
+        background-color: #f4f7ff;
+    }
+    & .heading {
+        display: flex;
+        gap: 20px;
+        border-radius: 10px;
+    }
+    & .title {
+        font-weight: 500 !important;
+    }
+    & .mainInfo {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        flex-grow: 1;
+        & .bold {
+            font-weight: 500;
+        }
+    }
+    & .someList {
+        margin-top: auto;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        &Item {
+            & .type {
+                border-radius: 5px;
+                text-align: center;
+                padding: 2px 6px;
+                background-color: color-mix(in srgb, var(--primary) 5%, var(--primary) 5%);
+                color: var(--primary);
+            }
+            & .status,
+            & .severity {
+                font-weight: 500;
+                border-radius: 5px;
+                text-align: center;
+                padding: 2px 6px;
+                &.green {
+                    background-color: color-mix(in srgb, var(--success) 5%, var(--success) 5%);
+                    color: var(--success);
+                }
+                &.orange {
+                    background-color: color-mix(in srgb, var(--warning) 5%, var(--warning) 5%);
+                    color: var(--warning);
+                }
+                &.blue {
+                    background-color: color-mix(in srgb, var(--primary) 5%, var(--primary) 5%);
+                    color: var(--primary);
+                }
+                &.red {
+                    background-color: color-mix(in srgb, var(--danger) 5%, var(--danger) 5%);
+                    color: var(--danger);
+                }
+            }
+        }
+    }
+    & .someInfo {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        align-items: end;
+        text-align: end;
+        position: relative;
+        padding-right: 60px;
+
+        & .icon {
+            cursor: pointer;
+            position: absolute;
+            top: 20px;
+            bottom: 0;
+            right: 20px;
+        }
+        & a {
+            display: block;
+            width: 100%;
+            margin-top: auto;
+            & button {
+                width: 100%;
+            }
+        }
+    }
+    & .info {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        & .infoBody,
+        & .infoSome {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            & span {
+                color: var(--primary);
+                font-weight: 500 !important;
+            }
+        }
+    }
+}

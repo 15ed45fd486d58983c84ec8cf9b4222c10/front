@@ -5,6 +5,7 @@ import cls from './Wrapper.module.scss';
 import { ToastContainer } from 'react-toastify';
 import { useTheme } from 'daskis-ui-kit';
 import Toolbar from '../Toolbar/Toolbar';
+import { Chat } from '@/entities/chat';
 
 export const Wrapper = () => {
     const { theme } = useTheme();
@@ -18,6 +19,7 @@ export const Wrapper = () => {
                         <div className={cls.mainInfo}>
                             <Outlet />
                         </div>
+                        <Chat />
                     </Container>
                 </section>
             </main>
