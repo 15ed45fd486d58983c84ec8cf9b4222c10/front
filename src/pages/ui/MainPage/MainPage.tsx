@@ -6,7 +6,7 @@ import { mapNavigation } from '@/shared/config';
 import Settings from '@assets/icons/settings.svg';
 import { IIncidentCardItemProps, IncidentCardItem, IncidentTypeEnum } from '@/entities/incident';
 
-export const mockIncidents: IIncidentCardItemProps[] = [
+const mockIncidents: IIncidentCardItemProps[] = [
     {
         type: IncidentTypeEnum.Accident,
         id: '1',
