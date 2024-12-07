@@ -1,0 +1,21 @@
+name: Build and push image
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+      - name: build images
+        run: docker build -t kvesten/hack-front:latest
+      - name: push
+        run: |
+          docker push kvesten/hack-front:latest
