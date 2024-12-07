@@ -1,4 +1,4 @@
-# Используем официальную Node.js образ
+# Используем официальный Node.js образ
 FROM node:18-alpine AS builder
 
 # Устанавливаем рабочую директорию
@@ -18,5 +18,12 @@ COPY . .
 RUN yarn build
 
 FROM nginx:latest
+
+# Копируем собранные файлы приложения
 COPY --from=builder /app/dist /usr/share/nginx/html
+
+# Копируем файл конфигурации Nginx
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+# Запускаем Nginx
 CMD ["nginx", "-g", "daemon off;"]
