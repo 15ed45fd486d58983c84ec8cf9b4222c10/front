@@ -16,7 +16,7 @@ jobs:
       - name: checkout
         uses: actions/checkout@v4
       - name: build images
-        run: docker build -t kvesten/hack-front:latest
+        run: docker build -t kvesten/hack-front:latest .
       - name: push
         run: |
           docker login --username kvesten -p ${{ secrets.DOCKER_HUB_TOKEN }}
