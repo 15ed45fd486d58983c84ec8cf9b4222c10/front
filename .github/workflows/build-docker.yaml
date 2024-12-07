@@ -19,4 +19,5 @@ jobs:
         run: docker build -t kvesten/hack-front:latest
       - name: push
         run: |
+          docker login --username kvesten -p ${{ secrets.DOCKER_HUB_TOKEN }}
           docker push kvesten/hack-front:latest
