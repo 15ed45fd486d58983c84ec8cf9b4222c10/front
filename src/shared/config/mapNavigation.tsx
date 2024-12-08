@@ -9,27 +9,27 @@ import { LayerEnum } from '@features/auth';
 export const mapNavigation: { label: string; icon: ReactNode; sysName: LayerEnum }[] = [
     {
         label: 'Камеры',
-        icon: CamerasIcon,
-        sysName: 'camera',
+        icon: <CamerasIcon />,
+        sysName: LayerEnum.Camera,
     },
     {
         label: 'Заторы',
-        icon: TrafficJamIcon,
-        sysName: 'restriction',
+        icon: <TrafficJamIcon />,
+        sysName: LayerEnum.Other,
     },
     {
         label: 'Ремонты',
-        icon: RepairIcon,
-        sysName: 'roadwork',
+        icon: <RepairIcon />,
+        sysName: LayerEnum.Roadwork,
     },
     {
         label: 'Аварии',
-        icon: AccidentIcon,
-        sysName: 'crash',
+        icon: <AccidentIcon />,
+        sysName: LayerEnum.Crash,
     },
     {
         label: 'Массовые мероприятия',
-        icon: MassEventsIcon,
-        sysName: 'other',
+        icon: <MassEventsIcon />,
+        sysName: LayerEnum.Comment,
     },
 ];

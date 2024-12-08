@@ -79,23 +79,29 @@ const mockIncidents: IIncidentCardItemProps[] = [
 
 export const MainPage = () => {
     const [mapDimensions, setMapDimensions] = useState({ width: 0, height: 0 });
-    const [layers, setLayers] = useState<LayerEnum[]>(['camera']);
+    const [layers, setLayers] = useState<LayerEnum[]>([LayerEnum.Camera]);
     const layersData = useLayers({
         layers,
         project: 'krasnodar',
     });
 
-    const includeLayer = useCallback((layer: LayerEnum) => {
-        return layers.includes(layer);
-    }, [layers]);
+    const includeLayer = useCallback(
+        (layer: LayerEnum) => {
+            return layers.includes(layer);
+        },
+        [layers],
+    );
 
-    const toggleLayer = useCallback((layer: LayerEnum) => {
-        if (includeLayer(layer)) {
-            setLayers(layers.filter((layerItem) => layerItem !== layer));
-        } else {
-            setLayers([...layers, layer]);
-        }
-    }, [layers, includeLayer]);
+    const toggleLayer = useCallback(
+        (layer: LayerEnum) => {
+            if (includeLayer(layer)) {
+                setLayers(layers.filter((layerItem) => layerItem !== layer));
+            } else {
+                setLayers([...layers, layer]);
+            }
+        },
+        [layers, includeLayer],
+    );
 
     useEffect(() => {
         const updateDimensions = () => {
@@ -144,7 +150,7 @@ export const MainPage = () => {
                                 onClick={() => toggleLayer(item.sysName)}
                                 data-active={includeLayer(item.sysName)}
                             >
-                                <item.icon />
+                                {item.icon}
                                 <Paragraph>{item.label}</Paragraph>
                             </li>
                         ))}
