@@ -10,19 +10,19 @@ export const SimulationCharts = () => {
                 <Heading size="h6" className={cls.title}>
                     Карта симуляции заторов
                 </Heading>
-                <img onClick={() => setSimulationOpen(true)} src="/img.png" alt="" />
+                <img onClick={() => setSimulationOpen(true)} src="/output.gif" alt="" />
             </div>
             <div className={cls.chart}>
                 <Heading size="h6" className={cls.title}>
                     Оптимальный вариант решения
                 </Heading>
-                <img onClick={() => setOptimalOpen(true)} src="/img.png" alt="" />
+                <img onClick={() => setOptimalOpen(true)} src="/output2.gif" alt="" />
             </div>
             <Modal className="modal" isOpen={simulationOpen} setOpen={setSimulationOpen}>
-                <img src="/img.png" alt="" />
+                <img src="/output.gif" alt="" />
             </Modal>
             <Modal className="modal" isOpen={optimalOpen} setOpen={setOptimalOpen}>
-                <img src="/img.png" alt="" />
+                <img src="/output2.gif" alt="" />
             </Modal>
         </div>
     );

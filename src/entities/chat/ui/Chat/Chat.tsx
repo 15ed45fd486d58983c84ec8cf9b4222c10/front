@@ -1,32 +1,25 @@
-import { useEffect, useRef } from 'react';
-import { Paragraph } from 'daskis-ui-kit';
+import { useEffect, useRef, useState } from 'react';
+import { Input, Paragraph } from 'daskis-ui-kit';
 import cls from './Chat.module.scss';
 import ChatIcon from '@assets/icons/robot.svg';
 import { useChat } from '../../store';
 import { classNames } from '@/shared/lib';
-
-const messages = [
-    {
-        message: 'abiba1',
-        income: false,
-    },
-    {
-        message: 'abiba2',
-        income: true,
-    },
-    {
-        message: 'abiba3',
-        income: false,
-    },
-    {
-        message: 'abiba4',
-        income: false,
-    },
-];
+import ArrowIcon from '@assets/icons/arrow-up.svg';
 
 export const Chat = () => {
     const { isActive, toggleIsActive } = useChat();
-
+    const [messages, setMessages] = useState([
+        {
+            message:
+                'Добро пожаловать в чатбот! Я создан для помощи в управлении дорожным движением и минимизации пробок. Моя миссия - обеспечить безопасность на дорогах, анализируя данные и предсказывая возможные инциденты. ',
+            income: false,
+        },
+        {
+            message: 'Какова текущая вероятность ДТП на участке А и каковы прогнозируемые времена устранения затора?',
+            income: true,
+        },
+    ]);
+    const [value, setValue] = useState<string>('');
     // Создаем ref для отслеживания кликов вне компонента
     const chatRef = useRef<HTMLDivElement>(null);
 
@@ -68,21 +61,46 @@ export const Chat = () => {
             <div className={cls.body}>
                 <ul className={cls.list}>
                     {messages.map((item, index) => (
-                        <li key={`${item.message} ${index}`} className={cls.listItem}>
-                            <Paragraph
-                                className={classNames(
-                                    cls.message,
-                                    {
-                                        [cls.income]: item.income,
-                                    },
-                                    [],
-                                )}
-                            >
+                        <li
+                            key={`${item.message} ${index}`}
+                            className={classNames(
+                                cls.listItem,
+                                {
+                                    [cls.income]: item.income,
+                                },
+                                [],
+                            )}
+                        >
+                            <Paragraph color={item.income ? 'white' : 'text'} size="h5">
                                 {item.message}
                             </Paragraph>
                         </li>
                     ))}
                 </ul>
+            </div>
+            <div className={cls.inputWrapper}>
+                <Input
+                    value={value}
+                    onChange={(value) => setValue(value)}
+                    size="small"
+                    placeholder="Напишите сообщение"
+                    className={cls.input}
+                />
+                <span
+                    onClick={() => {
+                        setValue('');
+                        setMessages((prev) => [
+                            ...prev,
+                            {
+                                message: value,
+                                income: true,
+                            },
+                        ]);
+                    }}
+                    className={cls.send}
+                >
+                    <ArrowIcon />
+                </span>
             </div>
         </div>
     );

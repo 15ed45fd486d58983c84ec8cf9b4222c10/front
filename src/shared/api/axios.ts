@@ -6,12 +6,12 @@ export const apiClient = axios.create({
     headers: {
         Authorization: localStorage.getItem('accessToken'),
     },
-    withCredentials: true,
+    withCredentials: false,
 });
 
 const refreshClient = axios.create({
     baseURL: import.meta.env.VITE_SERVER_URL as string,
-    withCredentials: true,
+    withCredentials: false,
 });
 
 const refreshAccessToken = async () => {

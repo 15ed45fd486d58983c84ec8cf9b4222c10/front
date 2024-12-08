@@ -6,7 +6,6 @@ import cls from './PredictionEvents.module.scss';
 export const PredictionEvents = () => {
     // Используем состояние из хранилища
     const { events, toggleFilter } = usePrediction();
-
     // Список типов массовых мероприятий
     const eventTypes = [
         'Спортивные мероприятия',

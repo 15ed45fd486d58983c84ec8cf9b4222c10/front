@@ -1,7 +1,8 @@
 import cls from './PredictionMap.module.scss';
-import { useEffect, useState } from 'react';
-import { YMaps, Map, TrafficControl, Polyline, Placemark } from '@pbe/react-yandex-maps';
+import { useEffect, useMemo, useState } from 'react';
+import { YMaps, Map, TrafficControl, Polyline, Placemark, Polygon } from '@pbe/react-yandex-maps';
 import { Paragraph } from 'daskis-ui-kit';
+import { usePrediction } from '../../store';
 
 interface RoadPoint {
     lat: number;
@@ -9,80 +10,41 @@ interface RoadPoint {
     color: string;
 }
 
-// Обновленный массив координат с цветами
-const readRoadArr: RoadPoint[] = [
-    { lat: 45.040158, lon: 38.976363, color: '#f00' }, // Красный
-    { lat: 45.042184, lon: 38.977177, color: '#0f0' }, // Зеленый
-    { lat: 45.045696, lon: 38.978362, color: '#f00' }, // Синий
-    { lat: 45.046316, lon: 38.978586, color: '#f00' }, // Желтый
-    { lat: 45.049473, lon: 38.979702, color: '#f00' }, // Пурпурный
-    { lat: 45.053807, lon: 38.981773, color: '#0f0' }, // Голубой
-    { lat: 45.058981, lon: 38.984014, color: '#0f0' }, // Черный
-    { lat: 45.058831, lon: 38.983113, color: '#0f0' }, // Темно-красный
-    { lat: 45.058969, lon: 38.982001, color: '#0f0' }, // Темно-зеленый
-    { lat: 45.05882, lon: 38.981826, color: '#0f0' }, // Темно-синий
-    { lat: 45.054273, lon: 38.980412, color: '#0f0' }, // Серый
-    { lat: 45.053852, lon: 38.980273, color: '#0f0' }, // Оранжевый
-    { lat: 45.045799, lon: 38.977699, color: '#0f0' }, // Розовый
-    { lat: 45.042309, lon: 38.97647, color: '#0f0' }, // Светло-зеленый
-    { lat: 45.040234, lon: 38.975723, color: '#0f0' }, // Светло-синий
-];
-const publicPlacesArr = [
-    {
-        lat: 45.03547,
-        lon: 38.975313,
-        severity: 1,
-    },
-    {
-        lat: 45.039018,
-        lon: 38.987221,
-        severity: 2,
-    },
-    {
-        lat: 45.029732,
-        lon: 38.971374,
-        severity: 3,
-    },
-    {
-        lat: 45.052035,
-        lon: 38.987668,
-        severity: 4,
-    },
-    {
-        lat: 45.048765,
-        lon: 38.972065,
-        severity: 5,
-    },
-    {
-        lat: 45.033195,
-        lon: 38.920602,
-        severity: 10,
-    },
-];
-
-// Создаем массив сегментов с типизацией
-interface RoadSegment {
-    points: [number[], number[]]; // Пара точек: [lat, lon]
+interface PolygonData {
+    coordinates: number[][];
     color: string;
 }
 
-const roadSegments: RoadSegment[] = readRoadArr.reduce((segments: RoadSegment[], current, index, array) => {
-    if (index < array.length - 1) {
-        segments.push({
-            points: [
-                [current.lat, current.lon], // Текущая точка
-                [array[index + 1].lat, array[index + 1].lon], // Следующая точка
-            ],
-            color: current.color, // Цвет текущей точки
-        });
-    }
-    return segments;
-}, []);
+// Пример границ Краснодара для генерации случайных координат
+const KRASNODAR_BOUNDS = {
+    latMin: 45.0,
+    latMax: 45.2,
+    lonMin: 38.9,
+    lonMax: 39.1,
+};
+
+const generateRandomPolygon = (): PolygonData => {
+    const getRandomCoord = () => [
+        Math.random() * (KRASNODAR_BOUNDS.latMax - KRASNODAR_BOUNDS.latMin) + KRASNODAR_BOUNDS.latMin,
+        Math.random() * (KRASNODAR_BOUNDS.lonMax - KRASNODAR_BOUNDS.lonMin) + KRASNODAR_BOUNDS.lonMin,
+    ];
+
+    const coordinates = [getRandomCoord(), getRandomCoord(), getRandomCoord(), getRandomCoord(), getRandomCoord()];
+
+    return {
+        coordinates,
+        color: `#${Math.floor(Math.random() * 16777215).toString(16)}`, // Случайный цвет
+    };
+};
 
 export const PredictionMap = () => {
     const [mapDimensions, setMapDimensions] = useState({ width: 0, height: 0 });
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [selected, setSelected] = useState<{ lat: number; lon: number } | null>();
+    const [polygons, setPolygons] = useState<PolygonData[]>([]);
+
+    const { build, events, repair, weather } = usePrediction();
+
     useEffect(() => {
         const updateDimensions = () => {
             const width =
@@ -102,6 +64,16 @@ export const PredictionMap = () => {
             window.removeEventListener('resize', updateDimensions);
         };
     }, []);
+
+    useMemo(() => {
+        // Генерация полигонов при изменении фильтров
+        const newPolygons = [];
+        if (build.length > 0) newPolygons.push(generateRandomPolygon());
+        if (events.length > 0) newPolygons.push(generateRandomPolygon());
+        if (repair.length > 0) newPolygons.push(generateRandomPolygon());
+        if (weather.length > 0) newPolygons.push(generateRandomPolygon());
+        setPolygons(newPolygons);
+    }, [build, events, repair, weather]);
 
     return (
         <div className={cls.wrapper}>
@@ -123,39 +95,17 @@ export const PredictionMap = () => {
                     )}
                     <TrafficControl />
 
-                    {roadSegments.map((segment, index) => (
-                        <Polyline
+                    {/* Отображение полигонов */}
+                    {polygons.map((polygon, index) => (
+                        <Polygon
                             key={index}
-                            geometry={segment.points} // Пара точек [lat, lon]
+                            geometry={[polygon.coordinates]}
                             options={{
-                                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                                // @ts-expect-error
-                                balloonCloseButton: false,
-                                strokeColor: segment.color, // Цвет линии
-                                strokeWidth: 4,
-                                strokeOpacity: 0.5,
-                            }}
-                        />
-                    ))}
-                    {publicPlacesArr.map((item, index) => (
-                        <Placemark
-                            onClick={() => {
-                                setIsOpen((prev) => !prev);
-                                setSelected({
-                                    lat: item.lat,
-                                    lon: item.lon,
-                                });
-                            }}
-                            key={index}
-                            geometry={[item.lat, item.lon]}
-                            properties={{
-                                iconContent: item.severity,
-                            }}
-                            options={{
-                                preset:
-                                    isOpen && selected && item.lat === selected.lat
-                                        ? 'islands#blueCircleIcon'
-                                        : 'islands#blackCircleIcon',
+                                fillColor: polygon.color,
+                                strokeColor: '#0000FF',
+                                opacity: 0.5,
+                                strokeWidth: 2,
+                                strokeStyle: 'shortdash',
                             }}
                         />
                     ))}
