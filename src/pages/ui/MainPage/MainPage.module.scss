@@ -46,7 +46,8 @@
                     }
                 }
 
-                &:hover {
+                &:hover,
+                &[data-active="true"] {
                     background-color: color-mix(in srgb, var(--primary) 10%, var(--primary) 10%);
                     & p {
                         color: var(--primary);
