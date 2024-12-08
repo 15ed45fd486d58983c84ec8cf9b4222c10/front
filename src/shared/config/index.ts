@@ -1,2 +1,2 @@
 export * from './toolbarNavigation';
-export * from './mapNavigation';
+export * from './mapNavigation.tsx';
