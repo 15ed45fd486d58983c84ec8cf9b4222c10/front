@@ -78,6 +78,10 @@
             top: 20px;
             bottom: 0;
             right: 20px;
+            & svg {
+                width: 16px;
+                height: 8px;
+            }
         }
         & a {
             display: block;

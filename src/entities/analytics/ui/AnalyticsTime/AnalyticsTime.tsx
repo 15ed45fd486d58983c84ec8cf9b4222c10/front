@@ -17,7 +17,6 @@ export const AnalyticsTime = () => {
         height: 300,
         xField: 'time', // Значения по оси X
         yField: 'value', // Значения по оси Y
-        colorField: 'time',
         legend: false,
     };
 

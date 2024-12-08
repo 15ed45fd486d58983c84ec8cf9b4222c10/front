@@ -83,7 +83,7 @@ export const MainPage = () => {
             const width =
                 window.innerWidth < 1400 ? window.innerWidth - (20 * 2 + 20 + 470) : 1400 - (20 * 2 + 20 + 270);
             const containerWidth = width; // Фиксированная ширина контейнера с отступами
-            const containerHeight = window.innerHeight - (80 + 200); // Высота окна минус фиксированный отступ
+            const containerHeight = 600; // Высота окна минус фиксированный отступ
             setMapDimensions({
                 width: containerWidth,
                 height: containerHeight,

@@ -1,26 +1,33 @@
 import { create } from 'zustand';
-import { IncidentTypeEnum } from '@/entities/incident'; // Импортируйте IncidentTypeEnum
 
 interface FilterState {
-    severity: string | null;
-    status: string | null;
-    types: IncidentTypeEnum[];
-    time: number | null;
-    setTime: (time: number) => void;
-    setSeverity: (severity: string | null) => void;
-    setStatus: (status: string | null) => void;
-    setTypes: (types: IncidentTypeEnum[]) => void;
-    resetFilters: () => void;
+    build: string[];
+    repair: string[];
+    weather: string[];
+    events: string[];
+    toggleFilter: (type: 'build' | 'repair' | 'weather' | 'events', value: string) => void;
+    clearFilters: (type: keyof FilterState) => void;
 }
 
-export const useFilterStore = create<FilterState>((set) => ({
-    severity: null,
-    status: null,
-    types: [],
-    time: 0,
-    setTime: (time) => set({ time }),
-    setSeverity: (severity) => set({ severity }),
-    setStatus: (status) => set({ status }),
-    setTypes: (types) => set({ types }),
-    resetFilters: () => set({ severity: null, status: null, types: [] }),
+export const usePrediction = create<FilterState>((set) => ({
+    build: [],
+    repair: [],
+    weather: [],
+    events: [],
+    toggleFilter: (type, value) => {
+        set((state) => {
+            const currentFilter: string[] = state[type];
+            const newFilter = currentFilter.includes(value)
+                ? currentFilter.filter((item) => item !== value) // Удаляем значение, если оно уже есть
+                : [...currentFilter, value]; // Добавляем значение, если его нет
+            return {
+                [type]: newFilter,
+            };
+        });
+    },
+    clearFilters: (type) => {
+        set(() => ({
+            [type]: [], // Очищаем фильтр для указанного типа
+        }));
+    },
 }));

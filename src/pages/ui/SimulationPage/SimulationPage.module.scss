@@ -1,10 +1,13 @@
 .wrapper {
     display: flex;
-
     flex-direction: column;
-
-    gap: 40px;
+    gap: 20px;
     & .title {
         font-weight: 500 !important;
+    }
+    & .body {
+        display: flex;
+        gap: 20px;
+        align-items: start;
     }
 }

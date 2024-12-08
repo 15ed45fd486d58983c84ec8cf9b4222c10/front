@@ -1,0 +1,30 @@
+.wrapper {
+    padding: 20px;
+    border-radius: 10px;
+    flex: 1 1 70%;
+    background-color: var(--bg);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    & .title {
+        font-weight: 600 !important;
+    }
+    & .chart {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        & img {
+            transition: 0.3s all ease;
+            cursor: pointer;
+            object-fit: cover;
+            height: 250px;
+            &:hover {
+                filter: brightness(85%);
+            }
+        }
+    }
+    & .modalImg {
+        width: 100vw;
+        height: 100vh;
+    }
+}

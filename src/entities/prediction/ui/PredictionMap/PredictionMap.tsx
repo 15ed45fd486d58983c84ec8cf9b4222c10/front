@@ -128,6 +128,8 @@ export const PredictionMap = () => {
                             key={index}
                             geometry={segment.points} // Пара точек [lat, lon]
                             options={{
+                                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                                // @ts-expect-error
                                 balloonCloseButton: false,
                                 strokeColor: segment.color, // Цвет линии
                                 strokeWidth: 4,

@@ -1,10 +1,42 @@
+.title {
+    font-weight: 600 !important;
+}
+
+.bold {
+    font-weight: 500 !important;
+}
+
 .wrapper {
     display: flex;
     flex-direction: column;
     gap: 20px;
-    & .selectWrapper {
+
+    & .list {
         display: flex;
         align-items: center;
-        gap: 20px;
+        border-radius: 10px;
+        justify-content: space-between;
+        border: 1px solid var(--text);
+        &Item {
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+
+            & p {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                & svg {
+                    width: 12px;
+                    height: 10px;
+                }
+            }
+
+            &:not(:last-child) {
+                border-right: 1px solid var(--text);
+            }
+        }
     }
 }

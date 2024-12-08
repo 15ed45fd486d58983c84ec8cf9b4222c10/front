@@ -25,7 +25,7 @@ const statusTranslations = new Map([
     ['pending', 'В ожидании'],
 ]);
 
-const incidentTypeTranslations = new Map<IncidentTypeEnum, string>([
+export const incidentTypeTranslations = new Map<IncidentTypeEnum, string>([
     [IncidentTypeEnum.Accident, 'ДТП'],
     [IncidentTypeEnum.RoadRepair, 'Дорожные работы'],
     [IncidentTypeEnum.MassEvent, 'Массовое мероприятие'],

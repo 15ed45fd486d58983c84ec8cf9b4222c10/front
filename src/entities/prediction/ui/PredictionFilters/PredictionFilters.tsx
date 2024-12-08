@@ -1,24 +1,16 @@
-import { SelectOne, SelectMany, Option } from 'daskis-ui-kit';
 import cls from './PredictionFilters.module.scss';
 import { IncidentTypeEnum } from '@/entities/incident'; // Импортируем типы инцидентов
-import { useFilterStore } from '../../store';
-import { InputRange } from '@/shared/ui';
+import FilterIcon from '@assets/icons/filters.svg';
+import ArrowDown from '@assets/icons/arrow-down.svg';
+import { Button, Heading, Paragraph } from 'daskis-ui-kit';
+import Slider from '@mui/material/Slider';
+import { useState } from 'react';
+import { Modal } from '@/shared/ui';
+import { PredictionEvents } from '../PredictionEvents';
+import { PredictionWeather } from '../PredictionWeather';
+import { PredictionRepair } from '../PredictionRepair';
+import { PredictionBuild } from '../PredictionBuild';
 
-const severityOptions: Option[] = [
-    { label: '1 - Очень низкий', value: '1' },
-    { label: '2 - Низкий', value: '2' },
-    { label: '3 - Средний', value: '3' },
-    { label: '4 - Высокий', value: '4' },
-    { label: '5 - Очень высокий', value: '5' },
-];
-
-const statusOptions: Option[] = [
-    { label: 'Активен', value: 'active' },
-    { label: 'Решён', value: 'resolved' },
-    { label: 'В ожидании', value: 'pending' },
-];
-
-// Мапа для перевода типа инцидента
 const incidentTypeTranslations = new Map<IncidentTypeEnum, string>([
     [IncidentTypeEnum.Accident, 'ДТП'],
     [IncidentTypeEnum.RoadRepair, 'Ремонт дороги'],
@@ -30,63 +22,98 @@ const incidentTypeTranslations = new Map<IncidentTypeEnum, string>([
 ]);
 
 export const PredictionFilters = () => {
-    const { severity, time, status, types, setSeverity, setStatus, setTime, setTypes } = useFilterStore();
+    const [timeRange, setTimeRange] = useState<number>(0); // Стейт для диапазона времени
+    const [openModal, setOpenModal] = useState<string | null>(null); // Стейт для текущей открытой модалки
 
-    const incidentTypeOptions = Object.values(IncidentTypeEnum).map((type) => ({
-        label: incidentTypeTranslations.get(type) || type,
-        value: type,
-    }));
-
-    const handleSeverityChange = (selected: Option | null) => {
-        setSeverity(selected ? selected.value : null);
+    const handleSliderChange = (event: Event, newValue: number | number[]) => {
+        setTimeRange(newValue as number);
     };
 
-    const handleTimeChange = (time: string) => {
-        // Преобразуем строку в число
-        setTime(Number(time));
+    const openModalHandler = (modalName: string) => {
+        setOpenModal(modalName); // Устанавливаем имя модалки для открытия
     };
 
-    const handleStatusChange = (selected: Option | null) => {
-        setStatus(selected ? selected.value : null);
-    };
-
-    const handleTypesChange = (selected: Option[]) => {
-        setTypes(selected.map((option) => option.value as IncidentTypeEnum));
+    const closeModalHandler = () => {
+        setOpenModal(null); // Закрываем текущую модалку
     };
 
     return (
         <div className={cls.wrapper}>
-            <div className={cls.selectWrapper}>
-                <SelectOne
-                    size="small"
-                    selected={severity ? { label: `${severity} - уровень критичности`, value: severity } : null}
-                    options={severityOptions}
-                    placeholder="Выберите уровень критичности"
-                    onChange={handleSeverityChange}
-                />
-
-                <SelectOne
-                    size="small"
-                    selected={status ? { label: status, value: status } : null}
-                    options={statusOptions}
-                    placeholder="Выберите статус инцидента"
-                    onChange={handleStatusChange}
-                />
-
-                <SelectMany
-                    size="small"
-                    selected={types.map((type) => ({ label: incidentTypeTranslations.get(type) || type, value: type }))}
-                    options={incidentTypeOptions}
-                    placeholder="Выберите типы инцидентов"
-                    onChange={handleTypesChange}
-                />
-            </div>
-            <InputRange
-                value={time ? time : 0}
-                onChange={(e) => handleTimeChange(e.target.value)}
-                maxValue={23}
-                minValue={0}
+            <ul className={cls.list}>
+                <li className={cls.listItem}>
+                    <span className={cls.icon}>
+                        <FilterIcon />
+                    </span>
+                </li>
+                <li className={cls.listItem} onClick={() => openModalHandler('massEvent')}>
+                    <Paragraph size="h4" className={cls.title}>
+                        Массовые мероприятия
+                        <ArrowDown />
+                    </Paragraph>
+                </li>
+                <li className={cls.listItem} onClick={() => openModalHandler('weatherConditions')}>
+                    <Paragraph size="h4" className={cls.title}>
+                        Погодные условия
+                        <ArrowDown />
+                    </Paragraph>
+                </li>
+                <li className={cls.listItem} onClick={() => openModalHandler('roadRepairs')}>
+                    <Paragraph size="h4" className={cls.title}>
+                        Ремонтные работы
+                        <ArrowDown />
+                    </Paragraph>
+                </li>
+                <li className={cls.listItem} onClick={() => openModalHandler('construction')}>
+                    <Paragraph size="h4" className={cls.title}>
+                        Строительство новых объектов инфраструктуры
+                        <ArrowDown />
+                    </Paragraph>
+                </li>
+            </ul>
+            <Slider
+                value={timeRange}
+                onChange={handleSliderChange}
+                min={0}
+                max={23}
+                valueLabelDisplay="auto"
+                valueLabelFormat={(item) => `${item}:00`}
+                sx={{
+                    color: 'var(--primary)',
+                }}
             />
+            {/* Модалки */}
+            <Modal
+                isOpen={openModal === 'massEvent'}
+                className={cls.modal}
+                setIsOpen={closeModalHandler}
+                parentClass=".app"
+            >
+                <PredictionEvents />
+            </Modal>
+            <Modal
+                className={cls.modal}
+                isOpen={openModal === 'weatherConditions'}
+                setIsOpen={closeModalHandler}
+                parentClass=".app"
+            >
+                <PredictionWeather />
+            </Modal>
+            <Modal
+                className={cls.modal}
+                isOpen={openModal === 'roadRepairs'}
+                setIsOpen={closeModalHandler}
+                parentClass=".app"
+            >
+                <PredictionRepair />
+            </Modal>
+            <Modal
+                className={cls.modal}
+                isOpen={openModal === 'construction'}
+                setIsOpen={closeModalHandler}
+                parentClass=".app"
+            >
+                <PredictionBuild />
+            </Modal>
         </div>
     );
 };

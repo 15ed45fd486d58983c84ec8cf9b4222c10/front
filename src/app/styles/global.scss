@@ -1,3 +1,13 @@
 @use './variables.scss';
 @use './themes/dark.scss';
 @use './themes/light.scss';
+
+.modal {
+    min-width: 100vw !important;
+    min-height: 100vh !important;
+    & img {
+        width: 100%;
+        object-fit: cover;
+        height: fit-content;
+    }
+}
