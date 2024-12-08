@@ -105,13 +105,6 @@ export const IncidentCardItem = ({
             <div className={cls.someInfo}>
                 <Paragraph size="h2">{formattedTime}</Paragraph> {/* Время */}
                 <Paragraph size="h4">{formattedDate}</Paragraph> {/* Дата */}
-                <Link to={`/incident/${id}`}>
-                    <Button size="medium" color="primary" borderColor="primary">
-                        <Paragraph size="h4" color="white">
-                            Перейти
-                        </Paragraph>
-                    </Button>
-                </Link>
             </div>
         </li>
     );

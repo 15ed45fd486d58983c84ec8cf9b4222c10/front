@@ -1,4 +1,4 @@
-import { YMaps, Map, TrafficControl } from '@pbe/react-yandex-maps';
+import { YMaps, Map, TrafficControl, Placemark } from '@pbe/react-yandex-maps';
 import { useState, useEffect, useCallback } from 'react';
 import cls from './MainPage.module.scss';
 import { Heading, Paragraph } from 'daskis-ui-kit';
@@ -77,6 +77,81 @@ const mockIncidents: IIncidentCardItemProps[] = [
     },
 ];
 
+const dots = {
+    [LayerEnum.Camera]: [
+        [45.0355, 38.9753],
+        [45.0449, 39.0025],
+        [45.033, 38.9876],
+        [45.04, 38.975],
+        [45.0467, 39.0043],
+        [45.0415, 38.9783],
+        [45.0372, 38.9825],
+        [45.0328, 38.9901],
+        [45.0364, 39.0072],
+        [45.0395, 38.9779],
+    ],
+    [LayerEnum.Crash]: [
+        [45.0295, 38.9769],
+        [45.0367, 39.0145],
+        [45.0382, 38.9802],
+        [45.0418, 39.0033],
+        [45.0333, 38.9865],
+        [45.0435, 38.9799],
+        [45.0358, 38.989],
+        [45.037, 38.9967],
+        [45.0456, 38.9722],
+        [45.0398, 38.9845],
+    ],
+    [LayerEnum.Roadwork]: [
+        [45.0489, 38.9934],
+        [45.033, 38.9887],
+        [45.0461, 39.001],
+        [45.035, 38.9777],
+        [45.0423, 38.9809],
+        [45.0375, 38.9854],
+        [45.0315, 38.9752],
+        [45.0388, 38.9912],
+        [45.0444, 39.0021],
+        [45.041, 38.9733],
+    ],
+    [LayerEnum.Restriction]: [
+        [45.0222, 38.9705],
+        [45.039, 39.0],
+        [45.0318, 38.979],
+        [45.0433, 38.9883],
+        [45.0371, 39.0101],
+        [45.0325, 38.9933],
+        [45.0369, 38.9805],
+        [45.0442, 38.9962],
+        [45.0386, 38.977],
+        [45.0419, 38.9928],
+    ],
+    [LayerEnum.Comment]: [
+        [45.0401, 38.9807],
+        [45.0432, 38.9722],
+        [45.0335, 38.9777],
+        [45.0467, 38.999],
+        [45.0378, 38.9894],
+        [45.031, 38.9708],
+        [45.0429, 39.0048],
+        [45.036, 38.986],
+        [45.0397, 38.983],
+        [45.0354, 38.9763],
+    ],
+    [LayerEnum.Other]: [
+        [45.0378, 38.9833],
+        [45.0404, 38.9745],
+        [45.0339, 38.9787],
+        [45.044, 39.0012],
+        [45.0384, 38.9876],
+        [45.0322, 38.9953],
+        [45.0366, 38.9729],
+        [45.0458, 39.0081],
+        [45.0413, 38.9857],
+        [45.0392, 38.9815],
+    ],
+};
+
 export const MainPage = () => {
     const [mapDimensions, setMapDimensions] = useState({ width: 0, height: 0 });
     const [layers, setLayers] = useState<LayerEnum[]>([LayerEnum.Camera]);
@@ -136,6 +211,16 @@ export const MainPage = () => {
                         defaultState={{ center: [45.03547, 38.975313], zoom: 13 }}
                     >
                         <TrafficControl />
+                        {/* Отображаем маркеры в зависимости от выбранных слоёв */}
+                        {layers.map((layer) =>
+                            dots[layer]?.map((coordinates, index) => (
+                                <Placemark
+                                    key={layer + index}
+                                    geometry={coordinates}
+                                    options={{ preset: 'islands#redDotIcon' }}
+                                />
+                            )),
+                        )}
                     </Map>
                 </YMaps>
                 <div className={cls.navigation}>
