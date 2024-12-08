@@ -1,5 +1,5 @@
 import { YMaps, Map, TrafficControl } from '@pbe/react-yandex-maps';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import cls from './MainPage.module.scss';
 import { Heading, Paragraph } from 'daskis-ui-kit';
 import { mapNavigation } from '@/shared/config';
@@ -7,6 +7,8 @@ import Settings from '@assets/icons/settings.svg';
 import { IncidentTypeEnum } from '@/entities/incident';
 import { IIncidentCardItemProps } from '@/entities/incident/ui';
 import { IncidentCardItem } from '@/entities/incident/ui/IncidentCardItem/IncidentCardItem';
+import { useLayers } from '@features/auth/hooks/useLayers.ts';
+import { LayerEnum } from '@features/auth';
 
 const mockIncidents: IIncidentCardItemProps[] = [
     {
@@ -77,6 +79,23 @@ const mockIncidents: IIncidentCardItemProps[] = [
 
 export const MainPage = () => {
     const [mapDimensions, setMapDimensions] = useState({ width: 0, height: 0 });
+    const [layers, setLayers] = useState<LayerEnum[]>(['camera']);
+    const layersData = useLayers({
+        layers,
+        project: 'krasnodar',
+    });
+
+    const includeLayer = useCallback((layer: LayerEnum) => {
+        return layers.includes(layer);
+    }, [layers]);
+
+    const toggleLayer = useCallback((layer: LayerEnum) => {
+        if (includeLayer(layer)) {
+            setLayers(layers.filter((layerItem) => layerItem !== layer));
+        } else {
+            setLayers([...layers, layer]);
+        }
+    }, [layers, includeLayer]);
 
     useEffect(() => {
         const updateDimensions = () => {
@@ -119,7 +138,12 @@ export const MainPage = () => {
                     </Paragraph>
                     <ul className={cls.list}>
                         {mapNavigation.map((item, index) => (
-                            <li className={cls.listItem} key={index}>
+                            <li
+                                className={cls.listItem}
+                                key={index}
+                                onClick={() => toggleLayer(item.sysName)}
+                                data-active={includeLayer(item.sysName)}
+                            >
                                 <item.icon />
                                 <Paragraph>{item.label}</Paragraph>
                             </li>
